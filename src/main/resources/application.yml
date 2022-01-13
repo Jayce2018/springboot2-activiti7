@@ -1,0 +1,26 @@
+spring:
+  activiti:
+    database-schema-update: true
+    history-level: full
+    db-history-used: true
+    check-process-definitions: false # 自动部署验证设置:true-开启（默认）、false-关闭
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/activitiM5?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialization-mode: always
+  security:
+    user:
+      name: admin 
+      password: admin
+
+server:
+  port: 9100
+
+logging:
+  level:
+    #打印activiti执行sql
+    org.activiti.engine.impl.persistence.entity: debug
+

@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "bd4ac240-0d7f-4f87-8e8c-a379d2bc7547",
+		"name": "activiti7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/deployment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/deployment?resourceName=transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"deployment"
+					],
+					"query": [
+						{
+							"key": "resourceName",
+							"value": "transfer"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/process/definition",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/process/definition?definitionKey=transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"process",
+						"definition"
+					],
+					"query": [
+						{
+							"key": "definitionKey",
+							"value": "transfer"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/process/start",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/process/start?processKey=transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"process",
+						"start"
+					],
+					"query": [
+						{
+							"key": "processKey",
+							"value": "transfer"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/task/info?processInstance=230399cb-737c-11ec-b457-5aab4dd16730",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"task",
+						"info"
+					],
+					"query": [
+						{
+							"key": "processInstance",
+							"value": "230399cb-737c-11ec-b457-5aab4dd16730"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/complete",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/task/complete?taskId=f6ca77bd-7412-11ec-9263-5aab4dd16730",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"task",
+						"complete"
+					],
+					"query": [
+						{
+							"key": "taskId",
+							"value": "f6ca77bd-7412-11ec-9263-5aab4dd16730"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/history/info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/history/info?processInstance=230399cb-737c-11ec-b457-5aab4dd16730",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"history",
+						"info"
+					],
+					"query": [
+						{
+							"key": "processInstance",
+							"value": "230399cb-737c-11ec-b457-5aab4dd16730"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
