@@ -45,6 +45,7 @@ public class ActivitiController {
     /**
      * 流程部署
      *
+     * @param resourceName 资源名
      * @return java.lang.String 部署id
      */
     @GetMapping(value = "/deployment")
@@ -61,7 +62,8 @@ public class ActivitiController {
     /**
      * 已部署的流程
      *
-     * @return Page<ProcessDefinition> 数据
+     * @param definitionKey 流程配置定义key
+     * @return List<ProcessInfo> 数据
      */
     @GetMapping(value = "/process/definition")
     public List<ProcessInfo> processDef(@RequestParam(value = "definitionKey") String definitionKey) {
@@ -76,6 +78,7 @@ public class ActivitiController {
     /**
      * 启动流程
      *
+     * @param processKey 流程实例key
      * @return String 流程实例ID
      */
     @GetMapping(value = "/process/start")
@@ -89,7 +92,8 @@ public class ActivitiController {
     /**
      * 查询当前实例下的正在处理的任务
      *
-     * @return String 流程实例ID
+     * @param processInstance 流程实例ID
+     * @return List<TaskInfo> 当前待处理的任务集合
      */
     @GetMapping(value = "/task/info")
     public List<TaskInfo> taskInfo(@RequestParam(value = "processInstance") String processInstance) {
@@ -103,7 +107,7 @@ public class ActivitiController {
 
     /**
      * 当前任务完成
-     *
+     * @param taskId 任务ID
      * @return String 任务ID
      */
     @GetMapping(value = "/task/complete")
@@ -115,9 +119,10 @@ public class ActivitiController {
     }
 
     /**
-     * 当前任务完成
+     * 任务活动历史
      *
-     * @return String 任务ID
+     * @param processInstance 流程实例ID
+     * @return List<HistoricActivityInfo> 历史信息
      */
     @GetMapping(value = "/history/info")
     public List<HistoricActivityInfo> historyInfo(@RequestParam(value = "processInstance") String processInstance) {
