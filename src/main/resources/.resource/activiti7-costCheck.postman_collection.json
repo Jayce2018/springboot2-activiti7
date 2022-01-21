@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "8c04ad54-aaf9-4dd4-86d7-f428c4ee1b54",
+		"name": "activiti7-costCheck",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/deployment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/cost/check/deployment?resourceName=back",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"deployment"
+					],
+					"query": [
+						{
+							"key": "resourceName",
+							"value": "back"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/process/definition",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/cost/check/process/definition?definitionKey=costCheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"process",
+						"definition"
+					],
+					"query": [
+						{
+							"key": "definitionKey",
+							"value": "costCheck"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/process/start",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deployId\": \"7a13675b-78d2-11ec-b40e-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/cost/check/process/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"process",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/add/candidate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskId\": \"26b918d4-78d3-11ec-b40e-4a9a490c4d1d\",\n    \"userId\":\"userSC_3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/cost/check/task/add/candidate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"task",
+						"add",
+						"candidate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"processInstanceId\": \"8f7be72e-78d2-11ec-b40e-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/cost/check/task/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"task",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "技术检验组创建成本提审",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskId\": \"8f7c0e45-78d2-11ec-b40e-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/cost/check/task/complete?taskId=f6ca77bd-7412-11ec-9263-5aab4dd16730",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"task",
+						"complete"
+					],
+					"query": [
+						{
+							"key": "taskId",
+							"value": "f6ca77bd-7412-11ec-9263-5aab4dd16730"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "并行完成",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskId\": \"26b918d4-78d3-11ec-b40e-4a9a490c4d1d\",\n    \"userId\":\"userSC_3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/cost/check/task/complete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"task",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/history/info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/activiti/history/info?processInstance=8f7be72e-78d2-11ec-b40e-4a9a490c4d1d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"activiti",
+						"history",
+						"info"
+					],
+					"query": [
+						{
+							"key": "processInstance",
+							"value": "8f7be72e-78d2-11ec-b40e-4a9a490c4d1d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

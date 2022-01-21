@@ -25,6 +25,7 @@ import java.util.List;
 
 /**
  * activiti7 流程模拟。常规逻辑[transfer]
+ * session 1 : 常规逻辑
  *
  * @author sunjie
  * @date 2022/1/12 10:18

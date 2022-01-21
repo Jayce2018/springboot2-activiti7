@@ -30,4 +30,7 @@ public class ActivitiForm {
 
     @ApiModelProperty("用户")
     private String userId;
+
+    @ApiModelProperty("节点名称")
+    private String jumpNodeName;
 }

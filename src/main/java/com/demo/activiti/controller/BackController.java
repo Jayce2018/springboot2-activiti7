@@ -6,6 +6,10 @@ import com.demo.activiti.common.entity.ProcessInfo;
 import com.demo.activiti.common.entity.TaskInfo;
 import com.demo.activiti.common.util.TypeConvertUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.FlowElement;
+import org.activiti.bpmn.model.FlowNode;
+import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -23,21 +27,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * activiti7 并行网关流程模拟【成本核算】
- * session 2 模拟场景：并行流程、单节点多人候选人处理
+ * activiti7 流程模拟【回退、跳转】
+ * session 3 模拟场景：回退、跳转
  *
  * @author sunjie
- * @date 2022/1/12 10:18
+ * @date 2022/1/20 15:46
  **/
 @Slf4j
 @RestController
-@RequestMapping("/cost/check")
-public class CostCheckController {
+@RequestMapping("/back")
+public class BackController {
     @Autowired
     private RepositoryService repositoryService;
 
@@ -49,6 +55,23 @@ public class CostCheckController {
 
     @Autowired
     private HistoryService historyService;
+
+    /**
+     * 部署的BPMN流程配置信息
+     *
+     * @param form 入参
+     * @return org.activiti.bpmn.model.BpmnModel 流程配置信息
+     */
+    @PostMapping(value = "/bpmn/info")
+    public BpmnModel info(@RequestBody ActivitiForm form) {
+        //查出流程id并返回
+        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery().deploymentId(form.getDeployId());
+        ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
+        log.info("流程定义信息：{}", processDefinition);
+
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
+        return bpmnModel;
+    }
 
     /**
      * 流程部署
@@ -151,7 +174,7 @@ public class CostCheckController {
             String assignee = task.getAssignee();
             if (StringUtils.isNotEmpty(assignee)) {
                 if (StringUtils.isEmpty(form.getUserId())) {
-                    throw new RuntimeException("存在责任定义，请指定责任人查询");
+                    throw new RuntimeException("存在责任定义，请指定责任人操作");
                 }
                 if (!assignee.equals(form.getUserId())) {
                     throw new RuntimeException("当前用户无权限操作");
@@ -176,6 +199,57 @@ public class CostCheckController {
 
         log.info("当前任务完成，id：{}", form.getTaskId());
         return form.getTaskId();
+    }
+
+    /**
+     * 跳转到指定节点
+     *
+     * @param form 流程请求对象
+     * @return String 任务ID
+     */
+    @PostMapping(value = "/task/jump")
+    public Object jump(@RequestBody ActivitiForm form) {
+        //1 当前节点。使用节点名查询，规避并行任务等
+        Task task = taskService.createTaskQuery().taskId(form.getTaskId()).singleResult();
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(task.getProcessDefinitionId());
+        Collection<FlowElement> flowElements = bpmnModel.getMainProcess().getFlowElements();
+        List<FlowElement> flowElementResults = flowElements.stream()
+                .filter(fl -> StringUtils.equals(fl.getName(), task.getName()))
+                .collect(Collectors.toList());
+        if(CollectionUtils.isEmpty(flowElementResults)){
+            throw new RuntimeException("查无当前节点信息");
+        }
+        FlowNode currentFlowNode =(FlowNode) flowElementResults.get(0);
+
+        //2 记录当前节点流向
+        List<SequenceFlow> hisOutgoingFlows = currentFlowNode.getOutgoingFlows();
+
+        //3 根据指定节点名，改变流程
+        List<FlowElement> jumpFlowElements = flowElements.stream()
+                .filter(fl -> StringUtils.equals(fl.getName(), form.getJumpNodeName()))
+                .collect(Collectors.toList());
+        if(CollectionUtils.isEmpty(jumpFlowElements)){
+            throw new RuntimeException("查无跳转节点信息");
+        }
+        FlowNode jumpFlowNode =(FlowNode) jumpFlowElements.get(0);
+
+        //4 跳转操作
+        //清理历史(根据场景确定是否清理，清理导致后续所有的执行链都会消失)
+        //currentFlowNode.getOutgoingFlows().clear();
+        //建立新流向
+        SequenceFlow newSequenceFlow = new SequenceFlow();
+        newSequenceFlow.setId("jumpSequenceFlowId");
+        newSequenceFlow.setSourceFlowElement(currentFlowNode);
+        newSequenceFlow.setTargetFlowElement(jumpFlowNode);
+        List<SequenceFlow> outgoingFlows = new ArrayList<>();
+        outgoingFlows.add(newSequenceFlow);
+        currentFlowNode.setOutgoingFlows(outgoingFlows);
+        //完成任务
+        taskService.complete(form.getTaskId());
+
+        //5 恢复历史流向
+        currentFlowNode.setOutgoingFlows(hisOutgoingFlows);
+        return form;
     }
 
     /**

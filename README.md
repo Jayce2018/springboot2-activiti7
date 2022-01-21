@@ -20,4 +20,6 @@ springboot+activiti7流程开发小demo
 idea为19及其以下，安装插件actiBPM，流程文件后缀为.bpmn
 idea为19以上，可安装activiti-bpmn-visualizer，流程文件后缀为.bpmn20.xml
 
+> 方便演示，都在controller实现，具体场景需合理应用
+
 慎用 ProcessRuntime、TaskRuntime!!!
