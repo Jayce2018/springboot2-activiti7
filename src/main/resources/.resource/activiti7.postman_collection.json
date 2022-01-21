@@ -61,10 +61,19 @@
 		{
 			"name": "/process/start",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deployId\": \"95b48f5c-7a85-11ec-a2db-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:9100/activiti/process/start?processKey=transfer",
+					"raw": "http://localhost:9100/activiti/process/start",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -74,12 +83,6 @@
 						"activiti",
 						"process",
 						"start"
-					],
-					"query": [
-						{
-							"key": "processKey",
-							"value": "transfer"
-						}
 					]
 				}
 			},

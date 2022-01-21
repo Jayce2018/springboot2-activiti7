@@ -1,5 +1,6 @@
 package com.demo.activiti.controller;
 
+import com.demo.activiti.common.entity.ActivitiForm;
 import com.demo.activiti.common.entity.HistoricActivityInfo;
 import com.demo.activiti.common.entity.ProcessInfo;
 import com.demo.activiti.common.entity.TaskInfo;
@@ -13,15 +14,15 @@ import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * activiti7 流程模拟。常规逻辑[transfer]
@@ -82,12 +83,18 @@ public class ActivitiController {
     /**
      * 启动流程
      *
-     * @param processKey 流程实例key
+     * @param form 流程请求对象
      * @return String 流程实例ID
      */
-    @GetMapping(value = "/process/start")
-    public String processStart(@RequestParam(value = "processKey") String processKey) {
-        final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey);
+    @PostMapping(value = "/process/start")
+    public String processStart(@RequestBody ActivitiForm form) {
+        //查出流程id并返回
+        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
+                .deploymentId(form.getDeployId());
+        ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
+        log.info("流程定义信息：{}", processDefinition);
+
+        final ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
 
         log.info("流程实例ID：{}", processInstance.getId());
         return processInstance.getId();
@@ -136,7 +143,11 @@ public class ActivitiController {
                 .list();
 
         log.info("当前任务完成，id：{}", hisList);
-        return TypeConvertUtil.listConvertor(hisList, HistoricActivityInfo.class);
+        List<HistoricActivityInfo> historicActivityInfos = TypeConvertUtil.listConvertor(hisList, HistoricActivityInfo.class);
+        historicActivityInfos = historicActivityInfos.stream()
+                .sorted(Comparator.comparing(HistoricActivityInfo::getStartTime))
+                .collect(Collectors.toList());
+        return historicActivityInfos;
     }
 
 }

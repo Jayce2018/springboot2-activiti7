@@ -266,7 +266,11 @@ public class BackController {
                 .list();
 
         log.info("当前任务完成，id：{}", hisList);
-        return TypeConvertUtil.listConvertor(hisList, HistoricActivityInfo.class);
+        List<HistoricActivityInfo> historicActivityInfos = TypeConvertUtil.listConvertor(hisList, HistoricActivityInfo.class);
+        historicActivityInfos = historicActivityInfos.stream()
+                .sorted(Comparator.comparing(HistoricActivityInfo::getStartTime))
+                .collect(Collectors.toList());
+        return historicActivityInfos;
     }
 
 }

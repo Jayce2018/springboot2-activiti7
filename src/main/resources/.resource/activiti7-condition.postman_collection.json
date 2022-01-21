@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "44624a41-b188-46d0-a396-eb42813c40c2",
+		"name": "activiti7-condition",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/bpmn/info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deployId\": \"dd42bae7-7a90-11ec-8137-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/condition/bpmn/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"condition",
+						"bpmn",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/deployment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/back/deployment?resourceName=condition",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"back",
+						"deployment"
+					],
+					"query": [
+						{
+							"key": "resourceName",
+							"value": "condition"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/process/definition",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/cost/check/process/definition?definitionKey=back",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"process",
+						"definition"
+					],
+					"query": [
+						{
+							"key": "definitionKey",
+							"value": "back"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/process/start",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deployId\": \"dd42bae7-7a90-11ec-8137-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/back/process/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"back",
+						"process",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/add/candidate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskId\": \"26b8f1c2-78d3-11ec-b40e-4a9a490c4d1d\",\n    \"userId\":\"userYW_1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/cost/check/task/add/candidate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"cost",
+						"check",
+						"task",
+						"add",
+						"candidate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"processInstanceId\": \"0257516a-7a97-11ec-8137-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/back/task/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"back",
+						"task",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/jump",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"jumpNodeName\": \"总经理审批\",\n    \"taskId\": \"1bf4ef74-7a97-11ec-8137-4a9a490c4d1d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/back/task/jump",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"back",
+						"task",
+						"jump"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/task/complete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskId\": \"30000229-7a97-11ec-8137-4a9a490c4d1d\",\n    \"variables\":{\n        \"money\":400\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9100/back/task/complete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"back",
+						"task",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/history/info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9100/condition/history/info?processInstanceId=0257516a-7a97-11ec-8137-4a9a490c4d1d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9100",
+					"path": [
+						"condition",
+						"history",
+						"info"
+					],
+					"query": [
+						{
+							"key": "processInstanceId",
+							"value": "0257516a-7a97-11ec-8137-4a9a490c4d1d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
